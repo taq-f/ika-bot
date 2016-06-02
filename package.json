@@ -1,0 +1,24 @@
+{
+  "name": "ika-bot",
+  "version": "1.0.0",
+  "description": "splatoon stage notification",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taq-f/ika-bot.git"
+  },
+  "keywords": [
+    "splatoon",
+    "bot",
+    "stage"
+  ],
+  "author": "taq-f",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taq-f/ika-bot/issues"
+  },
+  "homepage": "https://github.com/taq-f/ika-bot#readme"
+}
