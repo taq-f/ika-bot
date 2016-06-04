@@ -31,7 +31,6 @@ module.exports = (robot) => {
 	}, null, true, "Asia/Tokyo");
 
 	robot.respond(/stage$/i, (msg) => {
-		robot.messageRoom(room, "a");
 
 		fs.readFile('data/stage.json', 'utf-8', (err, data) => {
 			if (err) {
