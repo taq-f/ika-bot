@@ -30,7 +30,7 @@ module.exports = (robot) => {
 		});
 	}, null, true, "Asia/Tokyo");
 
-	robot.respond(/stage$/i, (msg) => {
+	robot.respond(/stage|ステージ$/i, (msg) => {
 
 		fs.readFile('data/stage.json', 'utf-8', (err, data) => {
 			if (err) {
@@ -80,7 +80,7 @@ module.exports = (robot) => {
 		});
 	});
 
-	robot.respond(/save$/i, (msg) => {
+	robot.respond(/save|セーブ$/i, (msg) => {
 
 		robot.messageRoom(room, "手動で更新する");
 
