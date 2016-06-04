@@ -7,7 +7,8 @@
 //   "jsdom": "^9.2.1"
 //
 // Commands:
-//   ika-bot stage - respond current turf war stages
+//   ika-bot stage|ステージ - respond current stages
+//   ika-bot save|セーブ - save stage information in local file
 
 'use strict';
 
