@@ -36,4 +36,3 @@ bin
 # Hubot
 .hubot_history
 scripts/example.coffee
-data/*
