@@ -55,7 +55,7 @@ module.exports = (robot) => {
 				for (let schedule of stages.schedule) {
 					const begin = new Date(schedule.datetime_begin).getTime();
 					const end = new Date(schedule.datetime_end).getTime();
-					if (begin <= now || now <= end) {
+					if (begin <= now && now <= end) {
 						currentSchedule = schedule;
 						break;
 					}
