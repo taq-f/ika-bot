@@ -24,7 +24,11 @@ module.exports = (robot) => {
 	new Cron("0 5 7,19 * * *", () => {
 		robot.messageRoom(room, "定期更新をする");
 		saveStageInfo().then(() => {
-			robot.messageRoom(room, "半日のステージ情報保存した");
+			fs.readFile('data/stage.json', 'utf-8', (err, data) => {
+				const schedules = JSON.parse(data).schedule;
+				const message = schedules.map(s => getNotificationString(s)).join('\r\n\r\n');
+				robot.messageRoom(room, message);
+			});
 		}).catch((err) => {
 			robot.messageRoom(room, "保存失敗した...");
 			fs.writeFileSync('data/stage.json', JSON.stringify({error: true}));
@@ -65,17 +69,7 @@ module.exports = (robot) => {
 					return;
 				}
 
-				let message = "";
-				message += parseTime(currentSchedule.datetime_begin);
-				message += ' ～ ';
-				message += parseTime(currentSchedule.datetime_end);
-				message += '\r\n\r\n';
-				message += '▼ナワバリ\r\n  ';
-				message += currentSchedule.stages.regular.map(s => s.name).join('  ');
-				message += '\r\n\r\n';
-				message += '▼ガチ(' + currentSchedule.gachi_rule + ')\r\n  ';
-				message += currentSchedule.stages.gachi.map(s => s.name).join('  ');
-
+				const message = getNotificationString(currentSchedule);
 				robot.messageRoom(room, message);
 			}
 		});
@@ -86,7 +80,11 @@ module.exports = (robot) => {
 		robot.messageRoom(room, "手動で更新する");
 
 		saveStageInfo().then(() => {
-			robot.messageRoom(room, "保存した");
+			fs.readFile('data/stage.json', 'utf-8', (err, data) => {
+				const schedules = JSON.parse(data).schedule;
+				const message = schedules.map(s => getNotificationString(s)).join('\r\n\r\n');
+				robot.messageRoom(room, message);
+			});
 		}).catch((err) => {
 			robot.messageRoom(room, "保存失敗した...");
 			fs.writeFileSync('data/stage.json', JSON.stringify({
@@ -96,6 +94,22 @@ module.exports = (robot) => {
 		});
 	});
 };
+
+function getNotificationString(schedule) {
+	let message = "";
+	message += '▼';
+	message += parseTime(schedule.datetime_begin);
+	message += ' ～ ';
+	message += parseTime(schedule.datetime_end);
+	message += '\r\n';
+	message += 'ナワバリ\r\n  --';
+	message += schedule.stages.regular.map(s => s.name).join(' / ');
+	message += '\r\n';
+	message += 'ガチ(' + schedule.gachi_rule + ')\r\n  --';
+	message += schedule.stages.gachi.map(s => s.name).join(' / ');
+
+	return message;
+}
 
 function saveStageInfo() {
 
