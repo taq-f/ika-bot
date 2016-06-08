@@ -35,7 +35,7 @@ module.exports = (robot) => {
 		});
 	}, null, true, "Asia/Tokyo");
 
-	robot.respond(/stage|ステージ$/i, (msg) => {
+	robot.hear(/stage|ステージ$/i, (msg) => {
 
 		fs.readFile('data/stage.json', 'utf-8', (err, data) => {
 			if (err) {
